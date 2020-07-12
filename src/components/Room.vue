@@ -18,7 +18,7 @@
           v-for="(item, innerindex) in rooms"
           :key="item.ID"
           :xs="12"
-          :sm="7"
+          :sm="9"
           :md="6"
           :lg="6"
           :xl="4"
@@ -77,7 +77,7 @@ export default {
     console.log('the id is:' + this.$route.params.id)
 
     this.$http({
-      url: `https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/rooms/${this.$route.params.id}`,
+      url: `/rooms/${this.$route.params.id}`,
       method: "get",
       crossdomain: true,
     })
@@ -88,6 +88,8 @@ export default {
 
     this.title = 'All rooms from ' + this.$route.params.name;
   }
+
+
 }
 </script>
 

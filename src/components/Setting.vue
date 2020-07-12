@@ -3,13 +3,7 @@
     <el-row class="tac">
       <el-col :span="4">
         <h5 align="center">Setting</h5>
-        <el-menu
-          class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
-          router
-          :default-active="activePath"
-        >
+        <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" router>
           <el-menu-item index="/radar">
             <template slot="title">
               <i class="el-icon-s-ticket"></i>
@@ -39,7 +33,6 @@
 export default {
   data () {
     return {
-      activePath: '/radar',
       ruleForm: {
         name: '',
         region: '',

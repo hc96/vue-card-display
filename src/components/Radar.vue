@@ -10,15 +10,32 @@
         class="demo-ruleForm"
       >
         <el-form-item label="ID" prop="id">
-          <el-input v-model="radarForm.id"></el-input>
+          <el-input v-model="radarForm.id" disabled></el-input>
         </el-form-item>
         <el-form-item label="Name" prop="name">
           <el-input v-model="radarForm.name"></el-input>
         </el-form-item>
+
+        <el-form-item label="Building" prop="building">
+          <el-select v-model="building" placeholder="Please Select a building">
+            <el-option v-for="item in buildings" :key="item.ID" :label="item.NAME" :value="item.ID">
+              <span style="float: left">{{ item.NAME }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.ID }}</span>
+            </el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="Room" prop="room">
           <el-select v-model="radarForm.room" placeholder="Please Select a Room">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+            <el-option
+              v-for="itemRoom in rooms"
+              :key="itemRoom.ID"
+              :label="itemRoom._NAME"
+              :value="itemRoom.ID"
+            >
+              <span style="float: left">{{ itemRoom._NAME }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{ itemRoom.ID }}</span>
+            </el-option>
           </el-select>
         </el-form-item>
 
@@ -55,12 +72,15 @@ export default {
       callback(new Error('please enter the valid id'))
     }
     return {
+      buildings: [],
+      rooms: [],
+      building: '',
       radarForm: {
-        id: null,
+        id: '',
         name: '',
         room: '',
-        resource: '',
-        unified_id: null,
+        position: '',
+        unified_id: '',
       },
       rules: {
         id: [
@@ -99,8 +119,35 @@ export default {
       this.$refs[formName].resetFields();
     },
   },
-  mounted () {
+  watch: {
+    building (val) {
+      console.log(`Building changed: ${val}`);
+      this.$http({
+        url: `/rooms/${val}`,
+        method: "get",
+        crossdomain: true,
+      })
+        .then(response => (this.rooms = response.data))
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
 
+      this.radarForm.room = ''
+
+
+    },
+    immediate: true,
+  },
+  mounted () {
+    this.$http({
+      url: "/building",
+      method: "get",
+      crossdomain: true,
+    })
+      .then(response => (this.buildings = response.data))
+      .catch(function (error) { // 请求失败处理
+        console.log(error);
+      });
   }
 }
 </script>

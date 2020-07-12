@@ -10,7 +10,7 @@
         class="demo-ruleForm"
       >
         <el-form-item label="ID" prop="id">
-          <el-input type="number" v-model="hubForm.id"></el-input>
+          <el-input type="number" v-model="hubForm.id" disabled></el-input>
         </el-form-item>
         <el-form-item label="Name" prop="name">
           <el-input v-model="hubForm.name"></el-input>
@@ -21,6 +21,7 @@
         <el-form-item label="Secure ID" prop="secure_id">
           <el-input type="number" v-model="hubForm.secure_id"></el-input>
         </el-form-item>
+
         <el-form-item label="Building" prop="building">
           <el-select v-model="hubForm.building" placeholder="Please select a building">
             <el-option v-for="item in buildings" :key="item.ID" :label="item.NAME" :value="item.ID">
@@ -29,15 +30,16 @@
             </el-option>
           </el-select>
         </el-form-item>
+
         <el-form-item label="Radar System" prop="system">
           <el-select v-model="hubForm.system" placeholder="Please select a radar system">
             <el-option
               v-for="itemSystem in systems"
               :key="itemSystem.ID"
-              :label="itemSystem.NAME"
-              :value="item.ID"
+              :label="itemSystem._NAME"
+              :value="itemSystem.ID"
             >
-              <span style="float: left">{{ itemSystem.NAME }}</span>
+              <span style="float: left">{{ itemSystem._NAME }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{ itemSystem.ID }}</span>
             </el-option>
           </el-select>
@@ -66,15 +68,15 @@ export default {
       callback(new Error('please enter the valid id'))
     }
     return {
-      buildings: [],
-      systems: [],
+      buildings: {},
+      systems: {},
       hubForm: {
-        id: {},
+        id: '',
         name: '',
-        pi_id: {},
-        secure_id: {},
-        building: {},
-        system: {},
+        pi_id: '',
+        secure_id: '',
+        building: '',
+        system: '',
       },
       rules: {
         id: [
@@ -153,24 +155,27 @@ export default {
 
     this.$http.all([
 
-      //   axios({
-      //     url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/",
-      //     method: "get",
-      //     crossdomain: true,
-      //   }),
+
       this.$http.get('/building'),
       this.$http.get('/system'),
 
-      //   axios({
-      //     url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/system",
-      //     method: "get",
-      //     crossdomain: true,
-      //   }),
+      // this.$http({
+      //   url: "/building",
+      //   method: "get",
+      //   crossdomain: true,
+      // }),
+      // this.$http({
+      //   url: "/system",
+      //   method: "get",
+      //   crossdomain: true,
+      // }),
 
-    ]).then(this.$http.spread((buildings, systems) => {
-      console.log('User', buildings.data);
+    ]).then(this.$http.spread((buildingsRes, systemsRes) => {
+      console.log('Building : ', typeof buildingsRes.data)
+      this.buildings = buildingsRes.data
 
-      console.log('Repositories', systems.data);
+      console.log('Radar System : ', systemsRes.data)
+      this.systems = systemsRes.data
 
     }));
 

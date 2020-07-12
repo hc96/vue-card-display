@@ -1,5 +1,10 @@
 <template>
   <div id="room">
+    <div id="rooms">
+      <el-page-header @back="goBack" :content="title"></el-page-header>
+      <el-divider></el-divider>
+    </div>
+
     <div class="card">
       <!-- <el-row v-for="(page, index) in pages" :key="index"> -->
       <el-row>
@@ -33,21 +38,16 @@
             </div>
             <div class="text item">
               <i class="el-icon-s-custom"></i>
-              {{'People ' + people }}
+              {{'People ' + item._ROOM_CAPACITY_HUMAN }}
             </div>
             <div class="text item">
               <i class="el-icon-bicycle"></i>
-              {{'Bike ' + bike }}
+              {{'Bike ' + item._ROOM_CAPACITY_BIKE }}
             </div>
             <div class="text item">
               <i class="el-icon-shopping-cart-1"></i>
-              {{'Wheelchair ' + wheelchair }}
+              {{'Wheelchair ' + item._ROOM_CAPACITY_WHEERCHAIR }}
             </div>
-            <el-button
-              style="float: right; padding: 3px 0"
-              type="text"
-              @click="showRoom(item.ID)"
-            >see more</el-button>
           </el-card>
         </el-col>
       </el-row>
@@ -64,7 +64,14 @@ export default {
       people: '17/30',
       bike: '10/30',
       wheelchair: '2/10',
+      title: ''
     };
+  },
+  methods: {
+    goBack () {
+      console.log('go back');
+      this.$router.push('/building');
+    }
   },
   mounted () {
     console.log('the id is:' + this.$route.params.id)
@@ -78,6 +85,8 @@ export default {
       .catch(function (error) { // 请求失败处理
         console.log(error);
       });
+
+    this.title = 'All rooms from ' + this.$route.params.name;
   }
 }
 </script>
@@ -92,9 +101,10 @@ export default {
   margin-top: 60px;
 }
 
-/* .card {
-  margin: auto;
-} */
+#rooms {
+  margin-left: 3%;
+  margin-bottom: 40px;
+}
 
 .text {
   font-size: 14px;

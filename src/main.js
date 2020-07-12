@@ -2,13 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import ElementUI from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
+import 'element-ui/lib/theme-chalk/index.css';
+// import locale from 'element-ui/lib/locale/lang/en'
+Vue.use(ElementUI)
+
 import axios from 'axios'
 Vue.prototype.$http = axios
-
-Vue.use(ElementUI, { locale })
-
+Vue.prototype.$http.all = axios.all
 Vue.config.productionTip = false
+
+
 
 new Vue({
   router,

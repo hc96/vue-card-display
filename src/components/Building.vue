@@ -1,19 +1,13 @@
 <template>
   <div id="building">
+    <h1>All Buildings</h1>
     <div class="card">
-      <!-- <el-row v-for="(page, index) in pages" :key="index"> -->
       <el-row>
-        <!-- <el-col
-          :span="4"
-          v-for="(item, innerindex) in page"
-          :key="item.ID"
-          :offset="innerindex > 0 ? 2 :1"
-        >-->
         <el-col
           v-for="(item, innerindex) in buildings"
           :key="item.ID"
           :xs="12"
-          :sm="7"
+          :sm="9"
           :md="6"
           :lg="6"
           :xl="4"
@@ -31,13 +25,13 @@
                 <span class="building-style">{{item.NAME}}</span>
               </span>
             </div>
-            <div class="text item">{{'People ' + people }}</div>
+            <div class="text item">{{'People ' + people +' (fake data)'}}</div>
             <div class="text item">{{'Bike ' + bike }}</div>
             <div class="text item">{{'Wheelchair ' + wheelchair }}</div>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
-              @click="showRoom(item.ID)"
+              @click="showRoom(item)"
             >see more</el-button>
           </el-card>
         </el-col>
@@ -47,7 +41,6 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
@@ -61,22 +54,21 @@ export default {
   },
   methods: {
     showRoom (id) {
+      console.log("suoss" + id.NAME)
       this.$router.push({
-        path: `/room/${id}`,
+        name: 'room',
+        params: {
+          id: id.ID,
+          name: id.NAME
+        }
       })
-    }
+    },
+
 
   },
   components: {
   },
   mounted () {
-    // this.$http
-    //   .get('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com')
-    //   .then(response => (this.info = response))
-    //   .catch(function (error) { // 请求失败处理
-    //     console.log(error);
-    //   });
-
     this.$http({
       url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/",
       method: "get",
@@ -87,20 +79,6 @@ export default {
         console.log(error);
       });
 
-
-  },
-  computed: {
-    pages () {
-      const pages = []
-      this.buildings.forEach((item, index) => {
-        const page = Math.floor(index / 2)
-        if (!pages[page]) {
-          pages[page] = []
-        }
-        pages[page].push(item)
-      })
-      return pages
-    }
 
   }
 }
@@ -139,7 +117,7 @@ export default {
 
 .box-card {
   width: 300px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .building-style {

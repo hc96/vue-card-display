@@ -1,6 +1,6 @@
 <template>
   <div id="show">
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" router>
+    <el-menu class="el-menu-demo" mode="horizontal" router>
       <el-menu-item index="/sensor">
         <i class="el-icon-s-ticket"></i>
         <span>Radars</span>
@@ -19,7 +19,7 @@
 export default {
   data () {
     return {
-      activeIndex: '/sensor',
+
     };
   },
   methods: {

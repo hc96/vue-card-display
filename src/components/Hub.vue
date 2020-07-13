@@ -133,7 +133,7 @@ export default {
       this.$refs[formName].resetFields();
     }
   },
-  mounted () {
+  async mounted () {
     // this.$http({
     //   url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/",
     //   method: "get",
@@ -166,11 +166,11 @@ export default {
     //     console.log(error);
     //   });
 
-    this.$http.all([
+    await this.$http.all([
 
 
-      this.$http.get('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/building'),
-      this.$http.get('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/system'),
+      await this.$http.get('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/building'),
+      await this.$http.get('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/system'),
 
       // this.$http({
       //   url: "/building",

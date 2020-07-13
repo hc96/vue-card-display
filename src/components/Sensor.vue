@@ -161,8 +161,8 @@ export default {
     };
   },
   methods: {
-    initRadar () {
-      this.$http({
+    async initRadar () {
+      await this.$http({
         url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/sensor",
         method: "get",
         crossdomain: true,
@@ -175,7 +175,7 @@ export default {
     showDialog (id) {
       console.log("suoss" + id._NAME)
     },
-    changeData (item) {
+    async changeData (item) {
       console.log('the item is ' + item)
       this.dialogFormVisible = true;
       this.form.id = item.ID;
@@ -185,7 +185,7 @@ export default {
       this.form.unified_id = item._UNIFIEDRADARID;
       console.log(this.form)
 
-      this.$http({
+      await this.$http({
         url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/building",
         method: "get",
         crossdomain: true,
@@ -218,7 +218,7 @@ export default {
           const { data: res } = await this.$http.post('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/edit_radar', this.editForm)
           console.log(res)
           if (res !== 'success') {
-            this.$message.error('failed to edit radar')
+            return this.$message.error('failed to edit radar')
           }
 
           this.$message.success('succeed to edit radar')
@@ -237,9 +237,9 @@ export default {
 
   },
   watch: {
-    building (val) {
+    async building (val) {
       console.log(`Building changed: ${val}`);
-      this.$http({
+      await this.$http({
         url: `https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/rooms/${val}`,
         method: "get",
         crossdomain: true,

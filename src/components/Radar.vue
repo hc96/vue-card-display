@@ -142,9 +142,9 @@ export default {
     },
   },
   watch: {
-    building (val) {
+    async building (val) {
       console.log(`Building changed: ${val}`);
-      this.$http({
+      await this.$http({
         url: `https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/rooms/${val}`,
         method: "get",
         crossdomain: true,

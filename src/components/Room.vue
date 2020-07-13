@@ -73,10 +73,10 @@ export default {
       this.$router.push('/building');
     }
   },
-  mounted () {
+  async mounted () {
     console.log('the id is:' + this.$route.params.id)
 
-    this.$http({
+    await this.$http({
       url: `https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/rooms/${this.$route.params.id}`,
       method: "get",
       crossdomain: true,

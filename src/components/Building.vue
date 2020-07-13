@@ -68,8 +68,8 @@ export default {
   },
   components: {
   },
-  mounted () {
-    this.$http({
+  async mounted () {
+    await this.$http({
       url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/building",
       method: "get",
       crossdomain: true,

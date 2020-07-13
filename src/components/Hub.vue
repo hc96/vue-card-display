@@ -36,10 +36,10 @@
             <el-option
               v-for="itemSystem in systems"
               :key="itemSystem.ID"
-              :label="itemSystem._NAME"
+              :label="itemSystem._SYSTEM_NAME"
               :value="itemSystem.ID"
             >
-              <span style="float: left">{{ itemSystem._NAME }}</span>
+              <span style="float: left">{{ itemSystem._SYSTEM_NAME }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{ itemSystem.ID }}</span>
             </el-option>
           </el-select>
@@ -68,6 +68,7 @@ export default {
       callback(new Error('please enter the valid id'))
     }
     return {
+      addForm: {},
       buildings: {},
       systems: {},
       hubForm: {
@@ -79,10 +80,6 @@ export default {
         system: '',
       },
       rules: {
-        id: [
-          { required: true, message: 'Please enter the radar hub id', trigger: 'blur' },
-          { validator: checkNumber, trigger: 'blur' }
-        ],
         name: [
           { required: true, message: 'Please enter the radar name', trigger: 'blur' },
           { min: 3, max: 15, message: '长度在 3 到 5 个字符', trigger: 'blur' }
@@ -106,10 +103,26 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           console.log(this.hubForm)
-          alert('submit!');
+          // alert('submit!');
+          this.addForm.name = this.hubForm.name;
+          this.addForm.pi_id = parseInt(this.hubForm.pi_id);
+          this.addForm.secure_id = parseInt(this.hubForm.secure_id);
+          this.addForm.building = this.hubForm.building;
+          this.addForm.system = this.hubForm.system;
+          console.log(this.addForm)
+
+          const { data: res } = await this.$http.post('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/radar_hub', this.addForm)
+          console.log(res)
+          if (res !== 'success') {
+            this.$message.error('failed to add radar hub')
+          }
+
+          this.$message.success('succeed to add radar hub')
+
+
         } else {
           console.log('error submit!!');
           return false;

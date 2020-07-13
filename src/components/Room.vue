@@ -33,7 +33,7 @@
               <br />
               <span>
                 Room Name:
-                <span class="building-style">{{item._NAME}}</span>
+                <span class="building-style">{{item._RAUM_NAME}}</span>
               </span>
             </div>
             <div class="text item">

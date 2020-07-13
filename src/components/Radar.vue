@@ -30,10 +30,10 @@
             <el-option
               v-for="itemRoom in rooms"
               :key="itemRoom.ID"
-              :label="itemRoom._NAME"
+              :label="itemRoom._RAUM_NAME"
               :value="itemRoom.ID"
             >
-              <span style="float: left">{{ itemRoom._NAME }}</span>
+              <span style="float: left">{{ itemRoom._RAUM_NAME }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{ itemRoom.ID }}</span>
             </el-option>
           </el-select>
@@ -109,7 +109,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert('submit!');
+          // alert('submit!');
           this.addForm.name = this.radarForm.name;
           if (this.radarForm.position === 'OUT') {
             this.addForm.in = 0;

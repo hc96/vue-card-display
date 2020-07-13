@@ -1,10 +1,9 @@
 <template>
-  <div id="building">
-    <h1 align="center">All Buildings</h1>
+  <div id="rhub">
     <div class="card">
       <el-row>
         <el-col
-          v-for="(item, innerindex) in buildings"
+          v-for="(item, innerindex) in rhubs"
           :key="item.ID"
           :xs="12"
           :sm="9"
@@ -16,18 +15,19 @@
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>
-                Building ID:
-                <span class="building-style">{{ item.ID }}</span>
+                Radar Hub ID:
+                <span class="rhub-style">{{ item.ID }}</span>
               </span>
               <br />
               <span>
-                Building Name:
-                <span class="building-style">{{item.NAME}}</span>
+                Radar Hub Name:
+                <span class="building-style">{{item._NAME}}</span>
               </span>
             </div>
-            <div class="text item">{{'People ' + people +' (fake data)'}}</div>
-            <div class="text item">{{'Bike ' + bike }}</div>
-            <div class="text item">{{'Wheelchair ' + wheelchair }}</div>
+            <div class="text item">{{'Building : ' + item.NAME }}</div>
+            <div class="text item">{{'Radar System : ' + item._SYSTEM_NAME }}</div>
+            <div class="text item">{{'PI ID : ' + item._PI_ID }}</div>
+            <div class="text item">{{'Secure ID : ' + item._SECUREID }}</div>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
@@ -43,38 +43,25 @@
 <script>
 
 export default {
-  name: 'App',
   data () {
     return {
-      people: '17/30',
-      bike: '10/30',
-      wheelchair: '2/10',
-      buildings: [],
+      rhubs: [],
     };
   },
   methods: {
-    showRoom (id) {
-      console.log("suoss" + id.NAME)
-      this.$router.push({
-        name: 'room',
-        params: {
-          id: id.ID,
-          name: id.NAME
-        }
-      })
+    showDialog (id) {
+      console.log("suoss" + id._NAME)
     },
 
 
   },
-  components: {
-  },
   mounted () {
     this.$http({
-      url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/building",
+      url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/rhub",
       method: "get",
       crossdomain: true,
     })
-      .then(response => (this.buildings = response.data))
+      .then(response => (this.rhubs = response.data))
       .catch(function (error) { // 请求失败处理
         console.log(error);
       });
@@ -85,7 +72,7 @@ export default {
 </script>
 
 <style>
-#building {
+#rhub {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -120,7 +107,7 @@ export default {
   margin-bottom: 40px;
 }
 
-.building-style {
+.rhub-style {
   color: #721d0d;
   font-weight: bold;
 }

@@ -5,6 +5,11 @@ import Room from '../components/Room.vue'
 import Setting from '../components/Setting.vue'
 import Radar from '../components/Radar.vue'
 import Hub from '../components/Hub.vue'
+import Rhub from '../components/Rhub.vue'
+import Sensor from '../components/Sensor.vue'
+import Show from '../components/Show.vue'
+
+
 
 
 Vue.use(VueRouter)
@@ -18,6 +23,14 @@ const routes = [
         path: '/room',
         name: 'room',
         component: Room,
+    },
+    {
+        path: '/show',
+        component: Show,
+        children: [
+            { path: '/sensor', component: Sensor },
+            { path: '/rhub', component: Rhub },
+        ]
     },
     {
         path: '/building',

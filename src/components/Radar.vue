@@ -47,7 +47,7 @@
         </el-form-item>
 
         <el-form-item label="UnifiedRadarID" prop="unified_id">
-          <el-input v-model="radarForm.unified_id"></el-input>
+          <el-input type="number" v-model="radarForm.unified_id"></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -72,6 +72,7 @@ export default {
       callback(new Error('please enter the valid id'))
     }
     return {
+      addForm: {},
       buildings: [],
       rooms: [],
       building: '',
@@ -83,10 +84,10 @@ export default {
         unified_id: '',
       },
       rules: {
-        id: [
-          { required: true, message: 'Please enter the radar id', trigger: 'blur' },
-          { validator: checkNumber, trigger: 'blur' }
-        ],
+        // id: [
+        //   { required: true, message: 'Please enter the radar id', trigger: 'blur' },
+        //   { validator: checkNumber, trigger: 'blur' }
+        // ],
         name: [
           { required: true, message: 'Please enter the radar name', trigger: 'blur' },
           { min: 3, max: 10, message: 'length between 3 and 10', trigger: 'blur' }
@@ -106,14 +107,35 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           alert('submit!');
+          this.addForm.name = this.radarForm.name;
+          if (this.radarForm.position === 'OUT') {
+            this.addForm.in = 0;
+            this.addForm.out = 1;
+          } else {
+            this.addForm.in = 1;
+            this.addForm.out = 0;
+          }
+          this.addForm.unifiedid = parseInt(this.radarForm.unified_id);
+          this.addForm.room = this.radarForm.room;
+          console.log(this.addForm)
+
+          const { data: res } = await this.$http.post('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/radar_data', this.addForm)
+          console.log(res)
+          if (res !== 'success') {
+            this.$message.error('failed to add radar')
+          }
+
+          this.$message.success('succeed to add radar')
+
         } else {
           console.log('error submit!!');
           return false;
         }
       });
+      this.addForm = {}
     },
     resetForm (formName) {
       this.$refs[formName].resetFields();
@@ -123,7 +145,7 @@ export default {
     building (val) {
       console.log(`Building changed: ${val}`);
       this.$http({
-        url: `/rooms/${val}`,
+        url: `https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/rooms/${val}`,
         method: "get",
         crossdomain: true,
       })
@@ -140,7 +162,7 @@ export default {
   },
   mounted () {
     this.$http({
-      url: "/building",
+      url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/building",
       method: "get",
       crossdomain: true,
     })

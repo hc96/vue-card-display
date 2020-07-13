@@ -156,8 +156,8 @@ export default {
     this.$http.all([
 
 
-      this.$http.get('/building'),
-      this.$http.get('/system'),
+      this.$http.get('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/building'),
+      this.$http.get('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/system'),
 
       // this.$http({
       //   url: "/building",

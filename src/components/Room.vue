@@ -1,7 +1,7 @@
 <template>
   <div id="room">
     <div id="rooms">
-      <el-page-header @back="goBack" :content="title"></el-page-header>
+      <el-page-header @back="goBack" :content="title" :title="Back"></el-page-header>
       <el-divider></el-divider>
     </div>
 
@@ -77,7 +77,7 @@ export default {
     console.log('the id is:' + this.$route.params.id)
 
     this.$http({
-      url: `/rooms/${this.$route.params.id}`,
+      url: `https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/rooms/${this.$route.params.id}`,
       method: "get",
       crossdomain: true,
     })

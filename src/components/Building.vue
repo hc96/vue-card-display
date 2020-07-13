@@ -70,7 +70,7 @@ export default {
   },
   mounted () {
     this.$http({
-      url: "/building",
+      url: "https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/building",
       method: "get",
       crossdomain: true,
     })

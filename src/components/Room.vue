@@ -16,7 +16,7 @@
         >-->
         <el-col
           v-for="(item, innerindex) in rooms"
-          :key="item.ID"
+          :key="item.RAUM_ID"
           :xs="12"
           :sm="9"
           :md="6"
@@ -28,7 +28,7 @@
             <div slot="header" class="clearfix">
               <span>
                 Room ID:
-                <span class="building-style">{{ item.ID }}</span>
+                <span class="building-style">{{ item.RAUM_ID }}</span>
               </span>
               <br />
               <span>

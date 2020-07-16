@@ -4,7 +4,7 @@
     <div class="card">
       <el-row>
         <el-col
-          v-for="(item, innerindex) in buildings"
+          v-for="(item, innerindex) in newbuildings"
           :key="item.ID"
           :xs="12"
           :sm="9"
@@ -17,17 +17,24 @@
             <div slot="header" class="clearfix">
               <span>
                 Building ID:
-                <span class="building-style">{{ item.ID }}</span>
+                <span class="building-style">{{ item.id }}</span>
               </span>
               <br />
               <span>
                 Building Name:
-                <span class="building-style">{{item.NAME}}</span>
+                <span class="building-style">{{item.name}}</span>
               </span>
             </div>
-            <div class="text item">{{'People ' + people +' (fake data)'}}</div>
-            <div class="text item">{{'Bike ' + bike }}</div>
-            <div class="text item">{{'Wheelchair ' + wheelchair }}</div>
+
+            <div class="text item">
+              <i class="el-icon-s-custom"></i>
+              {{'People ' + item.people}}
+            </div>
+            <div class="text item">
+              <i class="el-icon-bicycle"></i>
+              {{'Bike ' + item.bike }}
+            </div>
+            <!-- <div class="text item">{{'Wheelchair ' + wheelchair }}</div> -->
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
@@ -50,6 +57,7 @@ export default {
       bike: '10/30',
       wheelchair: '2/10',
       buildings: [],
+      newbuildings: []
     };
   },
   methods: {
@@ -78,6 +86,15 @@ export default {
       .catch(function (error) { // 请求失败处理
         console.log(error);
       });
+
+    console.log('building : ' + this.buildings)
+    for (let i in this.buildings) {
+      console.log(this.buildings[i])
+      const { data: res } = await this.$http.post('https://counter-responsible-badger-bl.cfapps.eu10.hana.ondemand.com/counter', this.buildings[i])
+      console.log(res)
+      this.newbuildings[i] = res;
+    }
+    console.log(this.newbuildings)
 
 
   }
